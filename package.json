@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/MadOgre/mikeslist/issues"
   },
-  "homepage": "https://github.com/MadOgre/mikeslist#readme"
+  "homepage": "https://github.com/MadOgre/mikeslist#readme",
+  "dependencies": {
+    "express": "^4.14.1"
+  }
 }
