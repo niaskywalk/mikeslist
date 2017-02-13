@@ -1,0 +1,19 @@
+{
+  "name": "mikeslist",
+  "version": "0.1.0",
+  "description": "A classified ads site",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MadOgre/mikeslist.git"
+  },
+  "author": "Mike Semko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MadOgre/mikeslist/issues"
+  },
+  "homepage": "https://github.com/MadOgre/mikeslist#readme"
+}
