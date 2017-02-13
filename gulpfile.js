@@ -6,6 +6,8 @@ let plumber = require("gulp-plumber");
 let sourceMaps = require("gulp-sourcemaps");
 let sass = require("gulp-sass");
 let autoprefixer = require("gulp-autoprefixer");
+let uglify = require("gulp-uglify");
+let concat = require("gulp-concat");
 const BROWSER_SYNC_DELAY = 400;
 
 gulp.task("nodemon", () => {
@@ -40,7 +42,22 @@ gulp.task("css", () => {
 		.pipe(gulp.dest("public/css/"));
 });
 
+gulp.task("js", () => {
+	return gulp.src(["public/js/**/*.js", "!public/js/main.js"])
+		.pipe(plumber(function(error) {
+		   console.log(error.cause);
+		   browserSync.notify('<pre style="text-align: left">' + error.cause + '</pre>', 4000);
+			this.emit("end");
+		}))
+		.pipe(sourceMaps.init())
+		.pipe(uglify())
+		.pipe(concat("main.js"))
+		.pipe(sourceMaps.write("."))
+		.pipe(gulp.dest("public/js"));	
+});
+
 gulp.task("default", ["browser-sync"], () => {
 	gulp.watch(["public/**/*.html", "public/**/*.tpl", "public/js/main.js"], browserSync.reload);
 	gulp.watch("public/scss/**/*.scss", ["css"]);
+	gulp.watch(["public/js/**/*.js", "!public/js/main.js"], ["js"]);
 });
