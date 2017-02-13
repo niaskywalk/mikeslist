@@ -56,7 +56,7 @@ gulp.task("js", () => {
 		.pipe(gulp.dest("public/js"));	
 });
 
-gulp.task("default", ["browser-sync"], () => {
+gulp.task("default", ["css", "js", "browser-sync"], () => {
 	gulp.watch(["public/**/*.html", "public/**/*.tpl", "public/js/main.js"], browserSync.reload);
 	gulp.watch("public/scss/**/*.scss", ["css"]);
 	gulp.watch(["public/js/**/*.js", "!public/js/main.js"], ["js"]);
