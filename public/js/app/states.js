@@ -4,6 +4,20 @@
 	config(["$stateProvider", "$locationProvider", "$urlRouterProvider",
 		function($stateProvider, $locationProvider, $urlRouterProvider){
 			$urlRouterProvider.otherwise("/");
+			var rootState = {
+				name: "root-state",
+				abstract: true,
+				component: "rootComponent"
+			};
+			var categoriesState = {
+				name: "root-state.categories-state",
+				url: "/",
+				views: {
+					"content-view": "categoriesComponent"
+				}
+			};
+			$stateProvider.state(rootState);
+			$stateProvider.state(categoriesState);
 			$locationProvider.html5Mode(true);
 		}]);
 })();
