@@ -1,0 +1,22 @@
+{
+  "name": "mikeslist",
+  "description": "A classified ads site",
+  "main": "server.js",
+  "authors": [
+    "Mike Semko"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/MadOgre/mikeslist",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.2",
+    "angular-ui-router": "1.0.0-rc.1"
+  }
+}

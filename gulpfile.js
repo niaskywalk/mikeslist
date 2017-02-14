@@ -43,7 +43,7 @@ gulp.task("css", () => {
 });
 
 gulp.task("js", () => {
-	return gulp.src(["public/js/**/*.js", "!public/js/main.js"])
+	return gulp.src(["public/js/app.js", "public/js/app/**/*.js", "!public/js/main.js"])
 		.pipe(plumber(function(error) {
 		   console.log(error.cause);
 		   browserSync.notify('<pre style="text-align: left">' + error.cause + '</pre>', 4000);

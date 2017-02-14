@@ -1,0 +1,3 @@
+<ul>
+	<li ng-repeat="category in $ctrl.categories">{{category.name}}</li>
+</ul>
