@@ -14,6 +14,11 @@
 				url: "/",
 				views: {
 					"content-view": "categoriesComponent"
+				},
+				resolve: {
+					categories: ["categoriesService", function(categoriesService){
+						return categoriesService.getAllCategories();
+					}]
 				}
 			};
 			$stateProvider.state(rootState);
