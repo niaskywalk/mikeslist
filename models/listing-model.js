@@ -6,7 +6,7 @@ let listingSchema = new mongoose.Schema({
 	title: String,
 	body: String,
 	posterEmail: String,
-	categories: [{type: mongoose.Schema.Types.ObjectId, ref: "Listing"}]
+	categories: [{type: mongoose.Schema.Types.ObjectId, ref: "Category"}]
 });
 
 listingSchema.plugin(betterId, {

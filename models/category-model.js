@@ -6,8 +6,7 @@ let categorySchema = new mongoose.Schema({
 		type: String,
 		unique: true,
 		lowercase: true
-	},
-	listings: [{type: String, ref: "Listing"}]
+	}
 });
 
 let Category = mongoose.model("Category", categorySchema);
