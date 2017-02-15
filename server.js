@@ -3,7 +3,12 @@ let express = require("express");
 let app = express();
 const PORT = process.env.NODE_PORT || 3000;
 
+require("./db");
+
 app.use(express.static("public"));
+
+let Listing = require("./models").Listing;
+let Category = require("./models").Category;
 
 app.get("*", (req, res) => {
 	res.sendFile(__dirname + "/public/index.html");
