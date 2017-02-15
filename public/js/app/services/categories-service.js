@@ -1,20 +1,17 @@
 (function(){
 	"use strict";
 	angular.module("mikeslist").
-	service("categoriesService", ["$q", function($q){
+	service("categoriesService", ["$http", function($http){
 		var vm = this;
 		vm.getAllCategories = function() {
-			return $q.when([
-				{
-					name: "Electronics"
-				},
-				{
-					name: "Games"
-				},
-				{
-					name: "Software"
-				}
-			]);
+			return $http.get("/api/v1/categories").then(function(data){
+				return data.data;
+			});
+		};
+		vm.getListingsForCategory = function(category) {
+			return $http.get("/api/v1/category/" + category).then(function(data){
+				return data.data;
+			});
 		};
 	}]);
 })();
