@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/MadOgre/mikeslist#readme",
   "dependencies": {
-    "express": "^4.14.1"
+    "body-parser": "^1.16.1",
+    "express": "^4.14.1",
+    "mongoose": "^4.8.2"
   },
   "devDependencies": {
     "browser-sync": "^2.18.7",
