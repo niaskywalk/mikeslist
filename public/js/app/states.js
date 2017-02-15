@@ -21,8 +21,34 @@
 					}]
 				}
 			};
+			var listingsState = {
+				name: "root-state.listings-state",
+				url: "/category/{category}",
+				views: {
+					"content-view": "listingsComponent"
+				},
+				resolve: {
+					listings: ["categoriesService", "$stateParams", function(categoriesService, $stateParams){
+						return categoriesService.getListingsForCategory($stateParams.category);
+					}]
+				}
+			};
+			var listingState = {
+				name: "root-state.listing-state",
+				url: "/listing/{listingId}",
+				views: {
+					"content-view": "listingComponent"
+				},
+				resolve: {
+					listing: ["listingsService", "$stateParams", function(listingsService, $stateParams){
+						return listingsService.getListing($stateParams.listingId);
+					}]
+				}
+			};
 			$stateProvider.state(rootState);
 			$stateProvider.state(categoriesState);
+			$stateProvider.state(listingsState);
+			$stateProvider.state(listingState);
 			$locationProvider.html5Mode(true);
 		}]);
 })();
