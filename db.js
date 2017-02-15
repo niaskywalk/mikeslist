@@ -8,7 +8,7 @@ mongoose.connection.on("connected", () => {
 	console.log("Connection to database successful");
 });
 
-mongoose.connection.on("error", (err) => {
+mongoose.connection.on("error", err => {
 	console.error(err.message);
 	process.exit();
 });

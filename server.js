@@ -7,24 +7,43 @@ require("./db");
 
 app.use(express.static("public"));
 
-let Listing = require("./models").Listing;
-let Category = require("./models").Category;
+require("./routes")(app);
 
 app.get("*", (req, res) => {
 	res.sendFile(__dirname + "/public/index.html");
 });
 
 app.use((err, req, res, next) => {
-	if (app.get("env") !== "production") {
-		return res.json({
+	if (err.code === 404) {
+		res.status(404).json({
 			error: err.message
 		});
 	} else {
-		return res.json({
+		next(err);
+	}
+});
+
+app.use((err, req, res, next) => {
+	if (err.code === 11000) {
+		res.status(409).json({
+			error: err.humanReadableError
+		});
+	} else {
+		next(err);
+	}
+});
+
+app.use((err, req, res, next) => {
+	if (app.get("env") !== "production") {
+		return res.status(500).json({
+			error: err.message
+		});
+	} else {
+		return res.status(500).json({
 			error: "(500) Internal Server Error"
 		});
 	}
-	next();
+	next(err);
 });
 
 app.listen(PORT, () => {
