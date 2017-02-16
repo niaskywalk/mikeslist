@@ -13,5 +13,10 @@
 				return data.data;
 			});
 		};
+		vm.createNewCategory = function(name) {
+			return $http.post("/api/v1/category", {name: name}).then(function(data){
+				return data.data;
+			});
+		};
 	}]);
 })();

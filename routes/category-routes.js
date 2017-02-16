@@ -35,7 +35,7 @@ function getSingleCategory(req, res, next) {
 		} else {
 			return Listing.find({categories: data._id}).populate({
 				path: "categories",
-				select: "name -_id"
+				select: "name"
 			});
 		}
 	}).

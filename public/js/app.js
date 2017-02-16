@@ -5,5 +5,8 @@
 		$transitions.onError({}, function(){
 			$state.go("root-state.categories-state");
 		});
-	}]);
+	}]).
+	value("globals", {
+		admin: false
+	});
 })();
