@@ -45,10 +45,22 @@
 					}]
 				}
 			};
+			var newListingState = {
+				name: "root-state.new-listing-state",
+				views: {
+					"content-view": "postListingFormComponent"
+				},
+				resolve: {
+					categories: ["categoriesService", function(categoriesService){
+						return categoriesService.getAllCategories();
+					}]
+				}
+			};
 			$stateProvider.state(rootState);
 			$stateProvider.state(categoriesState);
 			$stateProvider.state(listingsState);
 			$stateProvider.state(listingState);
+			$stateProvider.state(newListingState);
 			$locationProvider.html5Mode(true);
 		}]);
 })();
