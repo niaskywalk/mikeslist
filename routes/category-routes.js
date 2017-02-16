@@ -77,6 +77,9 @@ function updateCategory(req, res, next) {
 		return res.json(data);
 	}).
 	catch(err => {
+		if (err.code === 11000) {
+			err.humanReadableError = "Category with this name already exists";
+		}
 		return next(err);
 	});
 }

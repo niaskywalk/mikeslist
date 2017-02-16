@@ -1,6 +1,6 @@
 <ul>
 	<li ng-repeat="category in $ctrl.categories">
-		<a ui-sref="root-state.listings-state({category: category.name})">{{category.name}}</a>
+		<category-widget-component on-begin-edit="$ctrl.broadcastCloseAllOthers(except)" category="category"></category-widget-component>
 	</li>
-	<create-category-widget-component></create-category-widget-component>
+	<create-category-widget-component on-begin-edit="$ctrl.broadcastCloseAllOthers(except)"></create-category-widget-component>
 </ul>
