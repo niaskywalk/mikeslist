@@ -5,24 +5,37 @@
 		bindings: {
 			onBeginEdit: "&"
 		},
-		controller: ["categoriesService", "globals", "$state", "$timeout", "$scope", function(categoriesService, globals, $state, $timeout, $scope){
+		controller: ["$scope", "$state", "$timeout", "categoriesService", "globals", function($scope, $state, $timeout, categoriesService, globals) {
 			var vm = this;
-			vm.globals = globals;
+
+			//flag indicating the current widget state
 			vm.editing = false;
-			vm.category = "";
-			vm.cancelEdit = function() {
-				vm.editing = false;
-				vm.category = "";
-			};
+			
+			//placeholder for new category name
+			vm.categoryName = "";
+
+			//enables the template to check whether in admin mode or not
+			vm.globals = globals;
+
 			vm.beginEdit = function() {
+
+				//send a signal to parent to dispatch a closing event to all widgets except the current one
 				vm.onBeginEdit({except: "new"});
 				vm.editing = true;
+
+				//focus the input field
 				$timeout(function(){
 					document.getElementById("category-create-field").focus();					
 				});
 			};
+
+			vm.cancelEdit = function() {
+				vm.editing = false;
+				vm.categoryName = "";
+			};
+
 			vm.submitCategory = function() {
-				categoriesService.createNewCategory(vm.category).
+				categoriesService.createNewCategory(vm.categoryName).
 				then(function(){
 					vm.editing = false;
 					$state.go($state.current, {}, {reload: true});
@@ -32,6 +45,8 @@
 					console.error(err);
 				});
 			};
+
+			//if closing event received, check to make sure the current widget was not the sender
 			$scope.$on("close:forms", function(event, except){
 				if (except !== "new") {
 					vm.cancelEdit();

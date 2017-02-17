@@ -54,6 +54,7 @@ function createNewCategory(req, res, next) {
 		return res.json(data);
 	}).
 	catch(err => {
+				console.log(require("util").inspect(err.errors.kind));
 		if (err.code === 11000) {
 			err.humanReadableError = "Category with this name already exists";
 		} 

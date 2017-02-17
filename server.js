@@ -24,6 +24,20 @@ app.use((err, req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
+	if (err.name === "ValidationError") {
+		var result = [];
+		for (var name in err.errors) {
+			result.push(err.errors[name].message);
+		}
+		res.status(400).json({
+			error: result
+		});
+	} else {
+		next(err);
+	}
+});
+
+app.use((err, req, res, next) => {
 	if (err.code === 11000) {
 		res.status(409).json({
 			error: err.humanReadableError
