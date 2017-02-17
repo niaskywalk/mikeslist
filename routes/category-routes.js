@@ -35,7 +35,7 @@ function getSingleCategory(req, res, next) {
 		} else {
 			return Listing.find({categories: data._id}).populate({
 				path: "categories",
-				select: "name -_id"
+				select: "name"
 			});
 		}
 	}).
@@ -54,6 +54,7 @@ function createNewCategory(req, res, next) {
 		return res.json(data);
 	}).
 	catch(err => {
+				console.log(require("util").inspect(err.errors.kind));
 		if (err.code === 11000) {
 			err.humanReadableError = "Category with this name already exists";
 		} 
@@ -77,6 +78,9 @@ function updateCategory(req, res, next) {
 		return res.json(data);
 	}).
 	catch(err => {
+		if (err.code === 11000) {
+			err.humanReadableError = "Category with this name already exists";
+		}
 		return next(err);
 	});
 }
