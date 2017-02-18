@@ -3,10 +3,13 @@
 	angular.module("mikeslist").
 	component("categoriesComponent", {
 		bindings: {
-			categories: "<"
+			categories: "<",
+			uncategorizedListingsCount: "<"
 		},
-		controller: ["$scope", function($scope){
+		controller: ["$scope", "globals", function($scope, globals){
 			var vm = this;
+
+			vm.globals = globals;
 
 			//this function dispatches the event to signal close to all widgets except
 			//the one identified by the "except parameter"

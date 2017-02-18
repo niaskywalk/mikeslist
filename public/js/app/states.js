@@ -18,7 +18,10 @@
 				resolve: {
 					categories: ["categoriesService", function(categoriesService){
 						return categoriesService.getAllCategories();
-					}]
+					}],
+					uncategorizedListingsCount: ["categoriesService", function(categoriesService){
+						return categoriesService.getUncategorizedCount();
+					}],
 				}
 			};
 			var listingsState = {

@@ -5,7 +5,9 @@
 		var vm = this;
 		vm.getAllCategories = function() {
 			return $http.get("/api/v1/categories").then(function(data){
-				return data.data;
+				return data.data.filter(function(category){
+					return category.name !== "uncategorized";
+				});
 			});
 		};
 		vm.getListingsForCategory = function(name) {
@@ -20,6 +22,11 @@
 		};
 		vm.editCategory = function(name, category) {
 			return $http.put("/api/v1/category/" + name, category).then(function(data){
+				return data.data;
+			});
+		};
+		vm.getUncategorizedCount = function() {
+			return $http.get("/api/vi/categories/uncat").then(function(data){
 				return data.data;
 			});
 		};

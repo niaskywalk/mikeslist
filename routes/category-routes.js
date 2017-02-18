@@ -10,19 +10,45 @@ var Listing = require("../models").Listing;
 router.use(bodyParser.json());
 
 router.get("/categories", getAllCategories);
+router.get("/categories/uncat", getUncategorizedCount);
 router.get("/category/:name", getSingleCategory);
 router.post("/category", createNewCategory);
 router.put("/category/:name", updateCategory);
 router.delete("/category/:name", removeCategory);
 
 function getAllCategories(req, res, next) {
-	Category.find().
+	var results;
+	Category.find().lean().exec().
 	then(data => {
-		return res.json(data);
+		results = data;
+		var promises = [];
+		results.forEach(category => {
+			promises.push(Listing.find({categories: category._id}).count().exec());
+		});
+		return Promise.all(promises);
+	}).
+	then(counts => {
+		results.forEach((category, index) => {
+			category.listingCount = counts[index];
+		});
+		return res.json(results);
 	}).
 	catch(err => {
 		return next(err);
 	});
+}
+
+function getUncategorizedCount(req, res, next) {
+	Category.findOne({name: "uncategorized"}).
+	then(data => {
+		return Listing.find({categories: data._id}).count().exec();
+	}).
+	then(count => {
+		return res.json(count);
+	}).
+	catch(err => {
+		return next(err);
+	})
 }
 
 function getSingleCategory(req, res, next) {
@@ -63,6 +89,9 @@ function createNewCategory(req, res, next) {
 }
 
 function updateCategory(req, res, next) {
+	if (req.params.name.toLowerCase() === "uncategorized") {
+		return next(new Error("This category cannot be changed"));
+	}
 	Category.findOne({name: req.params.name}).
 	then(data => {
 		if (!data) {
