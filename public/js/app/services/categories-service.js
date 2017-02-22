@@ -15,7 +15,7 @@
 				return data.data;
 			});
 		};
-		vm.createNewCategory = function(name) {
+		vm.createCategory = function(name) {
 			return $http.post("/api/v1/category", {name: name}).then(function(data){
 				return data.data;
 			});
@@ -25,8 +25,8 @@
 				return data.data;
 			});
 		};
-		vm.getUncategorizedCount = function() {
-			return $http.get("/api/vi/categories/uncat").then(function(data){
+		vm.removeCategory = function(name) {
+			return $http.delete("/api/v1/category/" + name).then(function(data){
 				return data.data;
 			});
 		};

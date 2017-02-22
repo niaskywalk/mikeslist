@@ -4,7 +4,7 @@
 	component("categoriesComponent", {
 		bindings: {
 			categories: "<",
-			uncategorizedListingsCount: "<"
+			uncategorized: "<"
 		},
 		controller: ["$scope", "globals", function($scope, globals){
 			var vm = this;

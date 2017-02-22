@@ -53,6 +53,17 @@
 				});
 			};
 
+			vm.deleteCategory = function() {
+				categoriesService.removeCategory(vm.category.name).
+				then(function() {
+					$state.go($state.current, {}, {reload: true});
+				}).
+				catch(function(err){
+					window.alert(err.data.error);
+					console.error(err);
+				});
+			};
+
 			//if closing event received, check to make sure the current widget was not the sender
 			$scope.$on("close:forms", function(event, except){
 				if (except._id !== vm.category._id) {
