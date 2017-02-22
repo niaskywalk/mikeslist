@@ -3,7 +3,7 @@
 	angular.module("mikeslist").
 	component("listingsComponent", {
 		bindings: {
-			listings: "<"
+			category: "<"
 		},
 		templateUrl: "js/app/components/listings-component.tpl"
 	});

@@ -9,6 +9,9 @@ let listingSchema = new mongoose.Schema({
 	categories: [{type: mongoose.Schema.Types.ObjectId, ref: "Category"}]
 });
 
+//this plugin changes the way the _id field is represented
+//the current representation looks like listing_<yyMMddhhssS><0-99>
+//allowing for 100 articles to be created every millisecond
 listingSchema.plugin(betterId, {
   connection: mongoose.connection,
   field: '_id',
@@ -25,4 +28,5 @@ listingSchema.plugin(betterId, {
 });
 
 let Listing = mongoose.model("Listing", listingSchema);
+
 module.exports = Listing;

@@ -18,7 +18,10 @@
 				resolve: {
 					categories: ["categoriesService", function(categoriesService){
 						return categoriesService.getAllCategories();
-					}]
+					}],
+					uncategorized: ["categoriesService", function(categoriesService){
+						return categoriesService.getListingsForCategory("uncategorized");
+					}],
 				}
 			};
 			var listingsState = {
@@ -28,7 +31,7 @@
 					"content-view": "listingsComponent"
 				},
 				resolve: {
-					listings: ["categoriesService", "$stateParams", function(categoriesService, $stateParams){
+					category: ["categoriesService", "$stateParams", function(categoriesService, $stateParams){
 						return categoriesService.getListingsForCategory($stateParams.category);
 					}]
 				}
@@ -56,11 +59,26 @@
 					}]
 				}
 			};
+			var editListingState = {
+				name: "root-state.edit-listing-state",
+				views: {
+					"content-view": "editListingFormComponent"
+				},
+				resolve: {
+					categories: ["categoriesService", function(categoriesService){
+						return categoriesService.getAllCategories();
+					}]
+				},
+				params: {
+					listing: {}
+				}
+			};
 			$stateProvider.state(rootState);
 			$stateProvider.state(categoriesState);
 			$stateProvider.state(listingsState);
 			$stateProvider.state(listingState);
 			$stateProvider.state(newListingState);
+			$stateProvider.state(editListingState);
 			$locationProvider.html5Mode(true);
 		}]);
 })();

@@ -35,7 +35,7 @@
 			};
 
 			vm.submitCategory = function() {
-				categoriesService.createNewCategory(vm.categoryName).
+				categoriesService.createCategory(vm.categoryName).
 				then(function(){
 					vm.editing = false;
 					$state.go($state.current, {}, {reload: true});

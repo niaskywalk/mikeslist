@@ -13,5 +13,15 @@
 				return data.data;
 			});
 		};
+		vm.editListing = function(listingId, listing) {
+			return $http.put("/api/v1/listing/" + listingId, listing).then(function(data){
+				return data.data;
+			});
+		};
+		vm.deleteListing = function(listingId) {
+			return $http.delete("/api/v1/listing/" + listingId).then(function(data){
+				return data.data;
+			});
+		};
 	}]);
 })();
