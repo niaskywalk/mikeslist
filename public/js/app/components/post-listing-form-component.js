@@ -31,13 +31,22 @@
 				if (vm.listing.categories.length === 0) {
 					window.alert("You must pick at least 1 category");
 				} else {
+
+					//attempt to post the listing
 					listingsService.postListing(vm.listing).
 					then(function(data){
+
+						//if successful, load listing state with the saved state id
 						$state.go("root-state.listing-state", {listingId: data._id}, {reload: true});
 					}).
 					catch(function(err){
+
+						//if failed, display alert box with message
+						//and output error to console
 						window.alert("An error has occured while saving listing");
 						console.error(err);
+
+						//then reload the categories state
 						$state.go("root-state.categories-state", {}, {reload: true});
 					});
 				}

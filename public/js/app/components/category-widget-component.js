@@ -36,6 +36,9 @@
 			};
 
 			vm.cancelEdit = function() {
+
+				//set editing to false and revert the newValue back to
+				//existing category name
 				vm.editing = false;
 				vm.newValue = vm.category.name;
 			};
@@ -43,10 +46,17 @@
 			vm.submitCategory = function() {
 				categoriesService.editCategory(vm.category.name, {name: vm.newValue || ""}).
 				then(function(){
+
+					//if successful, set editing flag to false
+					//and reload current state
 					vm.editing = false;
 					$state.go($state.current, {}, {reload: true});
 				}).
 				catch(function(err){
+
+					//in case of error remain in editing state, focus the
+					//input field, display error message alert box,
+					//and output error to console
 					document.getElementById("category-edit-field").focus();
 					window.alert(err.data.error);
 					console.error(err);
@@ -56,9 +66,14 @@
 			vm.deleteCategory = function() {
 				categoriesService.removeCategory(vm.category.name).
 				then(function() {
+
+					//if deletion successful, reload current state
 					$state.go($state.current, {}, {reload: true});
 				}).
 				catch(function(err){
+
+					//in case of error, display message alert box
+					//and output error to console
 					window.alert(err.data.error);
 					console.error(err);
 				});
