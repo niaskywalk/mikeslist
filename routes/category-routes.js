@@ -10,7 +10,6 @@ var Listing = require("../models").Listing;
 router.use(bodyParser.json());
 
 router.get("/categories", getAllCategories);
-router.get("/categories/uncat", getUncategorizedCount);
 router.get("/category/:name", getSingleCategory);
 router.post("/category", createNewCategory);
 router.put("/category/:name", updateCategory);
@@ -27,19 +26,6 @@ function getAllCategories(req, res, next) {
 		return res.json(categories);
 	}).
 
-	catch(err => {
-		return next(err);
-	});
-}
-
-function getUncategorizedCount(req, res, next) {
-	Category.findOne({name: "uncategorized"}).
-	then(data => {
-		return Listing.find({categories: data._id}).count().exec();
-	}).
-	then(count => {
-		return res.json(count);
-	}).
 	catch(err => {
 		return next(err);
 	});
