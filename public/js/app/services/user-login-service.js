@@ -13,7 +13,7 @@
 (function(){
 	"use strict";
 	angular.module("mikeslist").
-	service("userLoginService", ["$http", "$window", "$q", "authenticationService", function($http, $window, $q, authenticationService){
+	service("userLoginService", ["$http", "$window", "$q", "authenticationService", "globals", function($http, $window, $q, authenticationService, globals){
 		var vm = this;
 		vm.login = function(email, password) {
 			return $http.post("/login", {email: email, password: password}).then(function(data){
@@ -33,6 +33,7 @@
 			delete authenticationService.bindings.email;
 			delete authenticationService.bindings.admin;
 			authenticationService.bindings.loggedIn = false;
+			globals.adminEditMode = false;
 			return $q.resolve({result: "success"});
 		};
 	}]);
