@@ -27,6 +27,7 @@
 			} else {
 				vm.bindings.loggedIn = false;
 				delete vm.bindings.email;
+				delete vm.bindings.admin;
 			}
 		};
 	}]);

@@ -24,7 +24,7 @@
 
 	value("globals", {
 
-		//set admin mode to false
+		//set admin edit mode to false
 		adminEditMode: false
 	});
 })();
