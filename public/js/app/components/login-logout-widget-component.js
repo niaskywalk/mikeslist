@@ -32,8 +32,12 @@
 				catch(function(err) {
 					vm.email = "";
 					vm.password = "";
-					window.alert(err.data.error);
-					console.error(err);
+					if (err.status === 403) {
+						vm.error = "Invalid email or password";
+					} else {
+						vm.error = "Error logging in, contact site owner";
+						console.error(err);
+					}
 				});
 			};
 
@@ -43,8 +47,8 @@
 					$state.go($state.current, {}, {reload: true});
 				}).
 				catch(function(err) {
-					window.alert(err.data.error);
-					console.log(err);
+					console.error(err.data.error);
+					console.error(err);
 				});
 			};
 
