@@ -8,6 +8,7 @@ let sass = require("gulp-sass");
 let autoprefixer = require("gulp-autoprefixer");
 let uglify = require("gulp-uglify");
 let concat = require("gulp-concat");
+let templateCache = require("gulp-angular-templatecache");
 const BROWSER_SYNC_DELAY = 400;
 
 gulp.task("nodemon", () => {
@@ -21,10 +22,13 @@ gulp.task("nodemon", () => {
 });
 
 gulp.task("browser-sync", ["nodemon"], () => {
-	return browserSync.init({
-		port: 4000,
-		proxy: "localhost:3000"
-	});
+	return global.setTimeout(() => {
+		browserSync.init({
+			port: 4000,
+			proxy: "localhost:3000"
+		});
+	}, BROWSER_SYNC_DELAY);
+
 });
 
 gulp.task("css", () => {
@@ -56,8 +60,18 @@ gulp.task("js", () => {
 		.pipe(gulp.dest("public/js"));	
 });
 
-gulp.task("default", ["css", "js", "browser-sync"], () => {
-	gulp.watch(["public/**/*.html", "public/**/*.tpl", "public/js/main.js"], browserSync.reload);
+gulp.task("templates", () => {
+	return gulp.src("public/js/app/components/**/*.tpl")
+		.pipe(templateCache("templates.js", {
+			module: "mikeslist",
+			moduleSystem: "IIFE"
+		}))
+		.pipe(gulp.dest("public/js/app"));
+});
+
+gulp.task("default", ["css", "templates", "js", "browser-sync"], () => {
+	gulp.watch(["public/**/*.html", "public/js/main.js"], browserSync.reload);
 	gulp.watch("public/scss/**/*.scss", ["css"]);
 	gulp.watch(["public/js/**/*.js", "!public/js/main.js"], ["js"]);
+	gulp.watch("public/js/**/*.tpl", ["templates"]);
 });

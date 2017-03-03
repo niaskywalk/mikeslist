@@ -7,7 +7,12 @@
 			var rootState = {
 				name: "root-state",
 				abstract: true,
-				component: "rootComponent"
+				component: "rootComponent",
+				resolve: {
+					uncategorized: ["categoriesService", function(categoriesService){
+						return categoriesService.getListingsForCategory("uncategorized");
+					}],
+				}
 			};
 			var categoriesState = {
 				name: "root-state.categories-state",
@@ -18,10 +23,7 @@
 				resolve: {
 					categories: ["categoriesService", function(categoriesService){
 						return categoriesService.getAllCategories();
-					}],
-					uncategorized: ["categoriesService", function(categoriesService){
-						return categoriesService.getListingsForCategory("uncategorized");
-					}],
+					}]
 				}
 			};
 			var listingsState = {
@@ -46,6 +48,9 @@
 					listing: ["listingsService", "$stateParams", function(listingsService, $stateParams){
 						return listingsService.getListing($stateParams.listingId);
 					}]
+				},
+				params: {
+					category: {}
 				}
 			};
 			var newListingState = {
@@ -73,12 +78,55 @@
 					listing: {}
 				}
 			};
+			var usersState = {
+				name: "root-state.users-state",
+				url: "/users",
+				resolve: {
+					users: ["usersService", function(usersService){
+						return usersService.getAllUsers();
+					}]
+				},
+				views: {
+					"content-view": "usersComponent"
+				}
+			};
+			var userState = {
+				name: "root-state.user-state",
+				url: "/user/{email}",
+				resolve: {
+					user: ["usersService", "$stateParams", function(usersService, $stateParams){
+						return usersService.getSingleUser($stateParams.email);
+					}]
+				},
+				views: {
+					"content-view": "userComponent"
+				}
+			};
+			var newUserState = {
+				name: "root-state.new-user-state",
+				views: {
+					"content-view": "createUserFormComponent"
+				}
+			};
+			var editUserState = {
+				name: "root-state.edit-user-state",
+				views: {
+					"content-view": "editUserFormComponent"
+				},
+				params: {
+					user: {}
+				}
+			};
 			$stateProvider.state(rootState);
 			$stateProvider.state(categoriesState);
 			$stateProvider.state(listingsState);
 			$stateProvider.state(listingState);
 			$stateProvider.state(newListingState);
 			$stateProvider.state(editListingState);
+			$stateProvider.state(usersState);
+			$stateProvider.state(userState);
+			$stateProvider.state(newUserState);
+			$stateProvider.state(editUserState);
 			$locationProvider.html5Mode(true);
 		}]);
 })();

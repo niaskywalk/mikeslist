@@ -1,3 +1,6 @@
+//This component renders all listing titles for category
+//The binding is resolved in state transition
+
 (function(){
 	"use strict";
 	angular.module("mikeslist").
@@ -5,6 +8,6 @@
 		bindings: {
 			category: "<"
 		},
-		templateUrl: "js/app/components/listings-component.tpl"
+		templateUrl: "listings-component.tpl"
 	});
 })();

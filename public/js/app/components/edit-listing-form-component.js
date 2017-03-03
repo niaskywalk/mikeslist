@@ -1,3 +1,9 @@
+//This component shows the edit listing form for a specific listing
+//the "categories" binding received all category names to be displayed as checkboxes
+//also it receives "listing" through state params to get the current listing data and categories
+//
+//The template used is common between this and post-listing-form-component
+
 (function(){
 	"use strict";
 	angular.module("mikeslist").
@@ -8,7 +14,7 @@
 		controller: ["$scope", "$state", "$stateParams", "$timeout", "listingsService", function($scope, $state, $stateParams, $timeout, listingsService) {
 			var vm = this;
 
-			//prepare listing model
+			//prepare listing model to be submitted in case of update
 			vm.listing = {
 				categories: []
 			};
@@ -20,10 +26,10 @@
 				var allCategoryIds = vm.categories.map(function(category){
 					return category._id;
 				});
+				Object.assign(vm.listing, $stateParams.listing);
 				var currentCategoryIds = vm.listing.categories.map(function(category){
 					return category._id;
-				});
-				Object.assign(vm.listing, $stateParams.listing);			
+				});			
 				vm.checkboxesState = allCategoryIds.map(function(categoryId){
 					return currentCategoryIds.indexOf(categoryId) !== -1 ? categoryId : false;
 				});
@@ -57,7 +63,7 @@
 					catch(function(err){
 
 						//in case of error, display alert message and output error to console
-						window.alert("An error has occured while saving listing");
+						window.alert(err.data.error);
 						console.error(err);
 
 						//them redirect to the listing state for the original listing
@@ -66,6 +72,6 @@
 				}
 			};
 		}],
-		templateUrl: "/js/app/components/post-listing-form-component.tpl"
+		templateUrl: "listing-form.tpl"
 	});
 })();

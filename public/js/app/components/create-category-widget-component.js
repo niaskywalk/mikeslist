@@ -1,3 +1,8 @@
+//This component shows a "create category" link which turns into a form
+//when activated
+//It attempts to create a new category
+//Clicking the link calls the onBeginEdit binding to close all other forms on the page
+
 (function(){
 	"use strict";
 	angular.module("mikeslist").
@@ -41,6 +46,11 @@
 					$state.go($state.current, {}, {reload: true});
 				}).
 				catch(function(err){
+					//focus the input field
+					$timeout(function(){
+						document.getElementById("category-create-field").focus();					
+						document.getElementById("category-create-field").select();					
+					});
 					window.alert(err.data.error);
 					console.error(err);
 				});
@@ -53,6 +63,6 @@
 				}
 			});
 		}],
-		templateUrl: "/js/app/components/create-category-widget-component.tpl"
+		templateUrl: "create-category-widget-component.tpl"
 	});
 })();
