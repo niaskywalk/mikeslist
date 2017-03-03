@@ -62,6 +62,9 @@
 					categories: ["categoriesService", function(categoriesService){
 						return categoriesService.getAllCategories();
 					}]
+				},
+				data: {
+					protected: "user"
 				}
 			};
 			var editListingState = {
@@ -76,6 +79,9 @@
 				},
 				params: {
 					listing: {}
+				},
+				data: {
+					protected: "user"
 				}
 			};
 			var usersState = {

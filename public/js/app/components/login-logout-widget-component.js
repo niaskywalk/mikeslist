@@ -44,7 +44,11 @@
 			vm.logout = function() {
 				userLoginService.logout().
 				then(function(){
-					$state.go($state.current, {}, {reload: true});
+					if ($state.current.data && $state.current.data.protected === "user") {
+						$state.go("root-state.categories-state", {}, {reload: true});
+					} else {
+						$state.go($state.current, {}, {reload: true});						
+					}
 				}).
 				catch(function(err) {
 					console.error(err.data.error);
