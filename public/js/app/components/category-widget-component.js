@@ -1,3 +1,14 @@
+//This component displays a name for the category with the listing count
+//as well as (if admin) the delete and edit links
+//
+//Clicking the edit link opens the edit form and calls onBeginEdit binding
+//
+//category binding is passed down from categories component as a category object
+//without resolving the listings
+//
+//onBeginEdit received a callback to notify parent to close other edit forms
+//when this edit form is open
+
 (function(){
 	"use strict";
 	angular.module("mikeslist").
@@ -32,6 +43,8 @@
 				//focus the input field
 				$timeout(function(){
 					document.getElementById("category-edit-field").focus();
+					document.getElementById("category-edit-field").select();
+
 				});
 			};
 
@@ -57,7 +70,11 @@
 					//in case of error remain in editing state, focus the
 					//input field, display error message alert box,
 					//and output error to console
-					document.getElementById("category-edit-field").focus();
+	
+					$timeout(function(){
+						document.getElementById("category-edit-field").focus();
+						document.getElementById("category-edit-field").select();
+					});
 					window.alert(err.data.error);
 					console.error(err);
 				});
@@ -86,6 +103,6 @@
 				}
 			});
 		}],
-		templateUrl: "/js/app/components/category-widget-component.tpl"
+		templateUrl: "category-widget-component.tpl"
 	});
 })();

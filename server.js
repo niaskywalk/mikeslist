@@ -1,26 +1,19 @@
 "use strict";
 let express = require("express");
 let app = express();
+let bp = require("body-parser");
 const PORT = process.env.NODE_PORT || 3000;
 
 require("./db");
 
 app.use(express.static("public"));
 
+app.use(bp.json());
+
 require("./routes")(app);
 
 app.get("*", (req, res) => {
 	res.sendFile(__dirname + "/public/index.html");
-});
-
-app.use((err, req, res, next) => {
-	if (err.code === 404) {
-		res.status(404).json({
-			error: err.message
-		});
-	} else {
-		next(err);
-	}
 });
 
 app.use((err, req, res, next) => {
@@ -49,7 +42,7 @@ app.use((err, req, res, next) => {
 
 app.use((err, req, res, next) => {
 	if (app.get("env") !== "production") {
-		return res.status(500).json({
+		return res.status(err.code || 500).json({
 			error: err.message
 		});
 	} else {
@@ -57,7 +50,7 @@ app.use((err, req, res, next) => {
 			error: "(500) Internal Server Error"
 		});
 	}
-	next(err);
+	return next(err);
 });
 
 app.listen(PORT, () => {

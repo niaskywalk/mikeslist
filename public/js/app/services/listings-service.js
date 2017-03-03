@@ -1,3 +1,6 @@
+//This service provides the basic listing CRUD api access
+//any updates or deletion of listings will be reflected on the categories
+
 (function(){
 	"use strict";
 	angular.module("mikeslist").

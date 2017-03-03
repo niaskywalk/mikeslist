@@ -1,14 +1,22 @@
+//This is a component that renders the header of the site
+//The header contains an admin mode switch (therefore bound to globals)
+//Also it contains the login/logout widget
+
 (function(){
 	"use strict";
 	angular.module("mikeslist").
 	component("headerComponent", {
-		controller: ["globals", function(globals){
+		bindings: {
+			uncategorized: "<"
+		},
+		controller: ["globals", "authenticationService", function(globals, authenticationService){
 			var vm = this;
 			vm.globals = globals;
-			vm.toggleAdmin = function() {
-				globals.admin = !globals.admin;
+			vm.authenticationBindings = authenticationService.bindings;
+			vm.toggleAdminEditMode = function() {
+				globals.adminEditMode = !globals.adminEditMode;
 			};
 		}],
-		templateUrl: "js/app/components/header-component.tpl"
+		templateUrl: "header-component.tpl"
 	});
 })();

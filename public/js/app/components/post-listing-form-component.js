@@ -1,3 +1,8 @@
+//This component shows the post listing form for a specific listing
+//the "categories" binding received all category names to be displayed as checkboxes
+//
+//The template used is common between this and post-listing-form-component
+
 (function(){
 	"use strict";
 	angular.module("mikeslist").
@@ -43,7 +48,7 @@
 
 						//if failed, display alert box with message
 						//and output error to console
-						window.alert("An error has occured while saving listing");
+						window.alert(err.data.error);
 						console.error(err);
 
 						//then reload the categories state
@@ -52,6 +57,6 @@
 				}
 			};
 		}],
-		templateUrl: "/js/app/components/post-listing-form-component.tpl"
+		templateUrl: "listing-form.tpl"
 	});
 })();

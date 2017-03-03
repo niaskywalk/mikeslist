@@ -7,11 +7,11 @@
 	<textarea ng-model="$ctrl.listing.body"
 			  required></textarea>
 	<br>
-	<input ng-model="$ctrl.listing.posterEmail"
+<!-- 	<input ng-model="$ctrl.listing.posterEmail"
 		   type="email"
 		   placeholder="email@example.com"
 		   required>
-	<br>
+	<br> -->
 	<label for="{{category.name + '_checkbox'}}"
 	       ng-repeat-start="category in $ctrl.categories">{{category.name}}</label>
 	<input id="{{category.name + '_checkbox'}}"
