@@ -18,8 +18,8 @@ app.get("*", (req, res) => {
 
 app.use((err, req, res, next) => {
 	if (err.name === "ValidationError") {
-		var result = [];
-		for (var name in err.errors) {
+		let result = [];
+		for (let name in err.errors) {
 			result.push(err.errors[name].message);
 		}
 		res.status(400).json({
