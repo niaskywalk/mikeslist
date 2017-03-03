@@ -56,6 +56,7 @@
 				vm.email = "";
 				vm.password = "";
 				vm.formOpen = false;
+				vm.error = "";
 			};
 		}],
 		templateUrl: "login-logout-widget-component.tpl"
