@@ -1,7 +1,7 @@
 "use strict";
 
-var Listing = require("../models").Listing;
-var Category = require("../models").Category;
+let Listing = require("../models").Listing;
+let Category = require("../models").Category;
 
 module.exports = {
 	getAll: (req, res, next) => {
@@ -40,7 +40,7 @@ module.exports = {
 			if (!foundListing) {
 
 				//if not construct the error and set the code to 404
-				var error = new Error("Listing not found");
+				let error = new Error("Listing not found");
 				error.code = 404;
 
 				//then abort the chain
@@ -62,7 +62,7 @@ module.exports = {
 	create: (req, res, next) => {
 
 		//create new listing in memory with information from request
-		var listing = new Listing(req.body);
+		let listing = new Listing(req.body);
 
 		//set the poster email
 		listing.posterEmail = req.user.email;
@@ -109,7 +109,7 @@ module.exports = {
 			//check if the listing exists
 			if (!foundListing) {
 				//if not construct the error and set the code to 404
-				var error = new Error("Listing not found");
+				let error = new Error("Listing not found");
 				error.code = 404;
 
 				//then abort the chain
@@ -197,7 +197,7 @@ module.exports = {
 			if (!foundListing) {
 
 				//if not construct the error and set the code to 404
-				var error = new Error("Listing not found");
+				let error = new Error("Listing not found");
 				error.code = 404;
 
 				//then abort the chain

@@ -2,6 +2,7 @@
 let express = require("express");
 let app = express();
 let bp = require("body-parser");
+let init = require("./init");
 const PORT = process.env.NODE_PORT || 3000;
 
 require("./db");
@@ -53,6 +54,9 @@ app.use((err, req, res, next) => {
 	return next(err);
 });
 
-app.listen(PORT, () => {
-	console.log(`Server active on port ${PORT}`);
-});
+init().
+then(() => {
+	app.listen(PORT, () => {
+		console.log(`Server active on port ${PORT}`);
+	});	
+})

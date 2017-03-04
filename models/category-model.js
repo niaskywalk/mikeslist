@@ -12,6 +12,8 @@ let categorySchema = new mongoose.Schema({
 	listings: [{type: String, ref: "Listing"}]
 });
 
+mongoose.Promise = global.Promise;
+
 //create a virtual field to report the number of listings in a category
 categorySchema.virtual("listingCount").get(function() {
 	return this.listings.length;

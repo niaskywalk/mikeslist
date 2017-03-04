@@ -9,6 +9,8 @@ let listingSchema = new mongoose.Schema({
 	categories: [{type: mongoose.Schema.Types.ObjectId, ref: "Category"}]
 });
 
+mongoose.Promise = global.Promise;
+
 //this plugin changes the way the _id field is represented
 //the current representation looks like listing_<yyMMddhhssS><0-99>
 //allowing for 100 articles to be created every millisecond

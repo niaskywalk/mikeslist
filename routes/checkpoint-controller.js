@@ -14,7 +14,7 @@ module.exports = {
 			if (err) return next(err);
 			Listing.findById(req.params.id).
 			then(foundListing => {
-				var error;
+				let error;
 				if (!foundListing) {
 					error = new Error("Listing not found");
 					error.code = 404;

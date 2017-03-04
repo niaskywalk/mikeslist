@@ -17,6 +17,8 @@ let UserSchema = new mongoose.Schema({
 	}
 });
 
+mongoose.Promise = global.Promise;
+
 UserSchema.methods.verifyPassword = function(password) {
 	return bcrypt.compare(password, this.password);
 };

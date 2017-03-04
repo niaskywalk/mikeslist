@@ -1,7 +1,9 @@
 "use strict";
 
-var Category = require("../models").Category;
-var Listing = require("../models").Listing;
+let Category = require("../models").Category;
+let Listing = require("../models").Listing;
+
+const uncategorizedId = require("../config").uncategorizedId;
 
 module.exports = {
 	getAll: (req, res, next) => {
@@ -58,7 +60,7 @@ module.exports = {
 	create: (req, res, next) => {
 
 		//create new category in memory
-		var category = new Category(req.body);
+		let category = new Category(req.body);
 
 		//attempt to save
 		category.save().
@@ -91,7 +93,7 @@ module.exports = {
 			if (!foundCategory) {
 
 				//if not found, construct an error object and attach 404 code
-				var error = new Error("Category not found");
+				let error = new Error("Category not found");
 				error.code = 404;
 
 				//then abort the chain
@@ -125,11 +127,8 @@ module.exports = {
 
 	delete: (req, res, next) => {
 
-		//the id for the 'uncategorized' category
-		const UNCAT_CATEGORY_ID = "58a6d94b0a1cd92e7461811a";
-
 		//category to be deleted
-		var categoryToDelete = {};
+		let categoryToDelete = {};
 		
 		//locate the category to be deleted
 		Category.findOne({name: req.params.name}).
@@ -140,7 +139,7 @@ module.exports = {
 			if (!foundCategory) {
 
 				//if not construct the error object
-				var error = new Error("Category not found");
+				let error = new Error("Category not found");
 				error.code = 404;
 
 				//and abort the chain
@@ -174,7 +173,7 @@ module.exports = {
 					}
 				},
 				{
-					$addToSet: {categories: UNCAT_CATEGORY_ID}
+					$addToSet: {categories: uncategorizedId}
 				},
 				{
 					multi: true
@@ -182,7 +181,7 @@ module.exports = {
 			).exec();
 		}).
 		then(() => {
-			return Listing.find({categories: UNCAT_CATEGORY_ID}, {_id: 1}).exec();
+			return Listing.find({categories: uncategorizedId}, {_id: 1}).exec();
 		}).
 		then(foundListings => {
 			return foundListings.map(function(listing){
@@ -195,8 +194,7 @@ module.exports = {
 			//uncategorized listings into it
 			return Category.update(
 				{
-					_id: UNCAT_CATEGORY_ID
-					//name: "uncategorized"
+					_id: uncategorizedId
 				},
 				{
 					$addToSet: {
