@@ -18,6 +18,10 @@
 				categories: []
 			};
 
+			vm.errors = {
+				categoryRequired: false
+			};
+
 			//this array reflects the current state of checkboxes
 			vm.checkboxesState = [];
 
@@ -34,7 +38,7 @@
 			//verify at least one category has been selected and submit the form
 			vm.submitForm = function() {
 				if (vm.listing.categories.length === 0) {
-					window.alert("You must pick at least 1 category");
+					vm.errors.categoryRequired = true;
 				} else {
 
 					//attempt to post the listing
