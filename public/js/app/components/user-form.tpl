@@ -3,12 +3,16 @@
 		<div class="error-message error-message-email-required" ng-if="userForm.$submitted && userForm.email.$error.required">
 			Email address is required
 		</div>
+		<div class="error-message error-message-email-required" ng-if="userForm.$submitted && userForm.email.$error.email">
+			Email address is invalid
+		</div>
 	</div>
 	<input id="email-field" ng-model="$ctrl.user.email"
 		   type="email"
 		   placeholder="user@example.com"
 		   required
-		   name="email">
+		   name="email"
+		   ng-change="userForm.$valid && userForm.$setPristine()">
 	<br>
 	<label for="admin-checkbox">User is admin: </label>
 	<input type="checkbox" ng-model="$ctrl.user.admin" ng-disabled="$ctrl.email && $ctrl.authenticationBindings.email === $ctrl.email">
