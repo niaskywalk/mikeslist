@@ -1,4 +1,7 @@
 <h1>This is the Header</h1>
+<pre>Development testing data
+Admin user: msemko@gmail.com
+Password:   warcraft</pre>
 <a ui-sref="root-state.categories-state">Go home</a><br>
 <a ng-if="$ctrl.authenticationBindings.loggedIn" href="" ui-sref="root-state.new-listing-state">Post New Listing</a>
 <a href="" ng-if="$ctrl.authenticationBindings.loggedIn && $ctrl.authenticationBindings.admin && !$ctrl.globals.adminEditMode" ng-click="$ctrl.toggleAdminEditMode()">Edit Mode Off</a>
