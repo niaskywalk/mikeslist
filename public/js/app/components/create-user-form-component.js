@@ -2,14 +2,19 @@
 	"use strict";
 	angular.module("mikeslist").
 	component("createUserFormComponent", {
-		controller: ["$state", "$timeout", "usersService", function($state, $timeout, usersService){
+		controller: ["$state", "$timeout", "$scope", "usersService", function($state, $timeout, $scope, usersService){
 			var vm = this;
 			vm.user = {};
+			vm.errors = {
+				passwordMismatched: false
+			};
 			vm.submitForm = function() {
 				if (!vm.user.password ||
 					!vm.user.passwordConfirmation ||
 					vm.user.password !== vm.user.passwordConfirmation) {
-					window.alert("Passwords do not match!");
+					//window.alert("Passwords do not match!");
+				    vm.errors.passwordMismatched = true;
+				    $scope.userForm.$setPristine();
 					vm.user.password = "";
 					vm.user.passwordConfirmation = "";
 					return;

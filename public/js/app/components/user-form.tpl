@@ -12,6 +12,9 @@
 		<div class="error-message error-message-confirmation-required" ng-if="userForm.$submitted && userForm.confirmation.$error.required">
 			Password confirmation is required
 		</div>
+		<div class="error-message error-message-passwords-mismatched" ng-if="$ctrl.errors.passwordMismatched">
+			Passwords do not match
+		</div>
 	</div>
 	<input id="email-field" ng-model="$ctrl.user.email"
 		   type="email"
@@ -28,6 +31,7 @@
 	       ng-required="!$ctrl.email"
 	       placeholder="password"
 	       name="password"
+	       ng-keydown="$ctrl.errors.passwordMismatched = ''"
 	       ng-change="userForm.$valid && userForm.$setPristine()">
 	<br>
 	<input type="password"
@@ -35,7 +39,11 @@
 	       ng-required="!$ctrl.email"
 	       placeholder="confirm password"
 	       name="confirmation"
+	       ng-keydown="$ctrl.errors.passwordMismatched = ''"
 	       ng-change="userForm.$valid && userForm.$setPristine()">
 	<br>
-	<button type="submit">Submit Form</button>
+	<button type="submit"
+			ng-click="$ctrl.errors.passwordMismatched = ''">
+				Submit Form
+	</button>
 </form>
