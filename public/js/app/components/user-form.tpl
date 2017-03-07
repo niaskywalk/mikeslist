@@ -6,6 +6,12 @@
 		<div class="error-message error-message-email-required" ng-if="userForm.$submitted && userForm.email.$error.email">
 			Email address is invalid
 		</div>
+		<div class="error-message error-message-password-required" ng-if="userForm.$submitted && userForm.password.$error.required">
+			Password is required
+		</div>
+		<div class="error-message error-message-confirmation-required" ng-if="userForm.$submitted && userForm.confirmation.$error.required">
+			Password confirmation is required
+		</div>
 	</div>
 	<input id="email-field" ng-model="$ctrl.user.email"
 		   type="email"
@@ -17,9 +23,19 @@
 	<label for="admin-checkbox">User is admin: </label>
 	<input type="checkbox" ng-model="$ctrl.user.admin" ng-disabled="$ctrl.email && $ctrl.authenticationBindings.email === $ctrl.email">
 	<br>
-	<input type="password" ng-model="$ctrl.user.password" ng-required="!$ctrl.email" placeholder="password">
+	<input type="password"
+	       ng-model="$ctrl.user.password"
+	       ng-required="!$ctrl.email"
+	       placeholder="password"
+	       name="password"
+	       ng-change="userForm.$valid && userForm.$setPristine()">
 	<br>
-	<input type="password" ng-model="$ctrl.user.passwordConfirmation" ng-required="!$ctrl.email" placeholder="confirm password">
+	<input type="password"
+	       ng-model="$ctrl.user.passwordConfirmation"
+	       ng-required="!$ctrl.email"
+	       placeholder="confirm password"
+	       name="confirmation"
+	       ng-change="userForm.$valid && userForm.$setPristine()">
 	<br>
 	<button type="submit">Submit Form</button>
 </form>
