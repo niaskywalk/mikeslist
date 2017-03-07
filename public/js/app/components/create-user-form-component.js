@@ -7,7 +7,8 @@
 			vm.user = {};
 			vm.errors = {
 				passwordMismatched: false,
-				emailExists: false
+				emailExists: false,
+				weakPassword: false
 			};
 			vm.resetErrors = function() {
 				for (var error in vm.errors) {
@@ -29,6 +30,8 @@
 				catch(function(err){
 					if (err.status === 409) {
 						vm.errors.emailExists = true;
+					} else if (err.status === 400)  {
+						vm.errors.weakPassword = true;
 					} else {
 						vm.errors.unknownError = true;
 						console.error(err);

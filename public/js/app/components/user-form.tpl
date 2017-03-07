@@ -18,8 +18,11 @@
 		<div class="error-message error-message-email-taken" ng-if="$ctrl.errors.emailExists">
 			Email is already taken
 		</div>
+		<div class="error-message error-message-password-weak" ng-if="$ctrl.errors.weakPassword">
+			This password is too weak. Please refer to instructions below
+		</div>
 		<div class="error-message error-message-unknown-error" ng-if="$ctrl.errors.unknownError">
-			Unknown error has occured. Contact site administrator.
+			Unknown error has occured. Contact site administrator
 		</div>
 	</div>
 	<input id="email-field" ng-model="$ctrl.user.email"
@@ -54,3 +57,8 @@
 				Submit Form
 	</button>
 </form>
+<pre>Password requirements:
+Password needs to be between 8-20 charachers long
+Password must contain a mix of lowercase and uppercase letters
+Password must contain at least 1 digit
+Password must contain at least one special character</pre>
