@@ -6,13 +6,16 @@
 			var vm = this;
 			vm.user = {};
 			vm.errors = {
-				passwordMismatched: false
+				passwordMismatched: false,
+				emailExists: false
+			};
+			vm.resetErrors = function() {
+				for (var error in vm.errors) {
+					vm.errors[error] = false;
+				}
 			};
 			vm.submitForm = function() {
-				if (!vm.user.password ||
-					!vm.user.passwordConfirmation ||
-					vm.user.password !== vm.user.passwordConfirmation) {
-					//window.alert("Passwords do not match!");
+				if (vm.user.password !== vm.user.passwordConfirmation) {
 				    vm.errors.passwordMismatched = true;
 				    $scope.userForm.$setPristine();
 					vm.user.password = "";
@@ -24,8 +27,13 @@
 					$state.go("root-state.user-state", {email: data.email}, {reload: true});
 				}).
 				catch(function(err){
-					window.alert(err.data.error);
-					console.log(err);
+					if (err.status === 409) {
+						vm.errors.emailExists = true;
+					} else {
+						vm.errors.unknownError = true;
+						console.error(err);
+					}
+					$scope.userForm.$setPristine();
 					vm.user.password = "";
 					vm.user.passwordConfirmation = "";
 					$timeout(function(){

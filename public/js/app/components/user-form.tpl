@@ -15,12 +15,19 @@
 		<div class="error-message error-message-passwords-mismatched" ng-if="$ctrl.errors.passwordMismatched">
 			Passwords do not match
 		</div>
+		<div class="error-message error-message-email-taken" ng-if="$ctrl.errors.emailExists">
+			Email is already taken
+		</div>
+		<div class="error-message error-message-unknown-error" ng-if="$ctrl.errors.unknownError">
+			Unknown error has occured. Contact site administrator.
+		</div>
 	</div>
 	<input id="email-field" ng-model="$ctrl.user.email"
 		   type="email"
 		   placeholder="user@example.com"
 		   required
 		   name="email"
+		   ng-keydown="$ctrl.resetErrors()"
 		   ng-change="userForm.$valid && userForm.$setPristine()">
 	<br>
 	<label for="admin-checkbox">User is admin: </label>
@@ -31,7 +38,7 @@
 	       ng-required="!$ctrl.email"
 	       placeholder="password"
 	       name="password"
-	       ng-keydown="$ctrl.errors.passwordMismatched = ''"
+	       ng-keydown="$ctrl.resetErrors()"
 	       ng-change="userForm.$valid && userForm.$setPristine()">
 	<br>
 	<input type="password"
@@ -39,7 +46,7 @@
 	       ng-required="!$ctrl.email"
 	       placeholder="confirm password"
 	       name="confirmation"
-	       ng-keydown="$ctrl.errors.passwordMismatched = ''"
+	       ng-keydown="$ctrl.resetErrors()"
 	       ng-change="userForm.$valid && userForm.$setPristine()">
 	<br>
 	<button type="submit"
