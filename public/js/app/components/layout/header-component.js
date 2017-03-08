@@ -1,5 +1,5 @@
 //This is a component that renders the header of the site
-//The header contains an admin mode switch (therefore bound to globals)
+//The header contains an edit mode switch (therefore bound to globals)
 //Also it contains the login/logout widget
 
 (function(){
