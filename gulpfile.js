@@ -64,7 +64,10 @@ gulp.task("templates", () => {
 	return gulp.src("public/js/app/components/**/*.tpl")
 		.pipe(templateCache("templates.js", {
 			module: "mikeslist",
-			moduleSystem: "IIFE"
+			moduleSystem: "IIFE",
+			transformUrl: function(url) {
+				return require("path").basename(url);
+			}
 		}))
 		.pipe(gulp.dest("public/js/app"));
 });
