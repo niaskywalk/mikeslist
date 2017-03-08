@@ -24,7 +24,8 @@
 			vm.editing = false;
 
 			vm.errors = {
-				categoryExists: false
+				categoryExists: false,
+				unknownError: false
 			};
 
 			vm.resetErrors = function() {
@@ -88,6 +89,9 @@
 					});
 					if (err.status === 409) {
 						vm.errors.categoryExists = true;
+					} else {
+						vm.errors.unknownError = true;
+						console.error(err);
 					}
 				});
 			};
