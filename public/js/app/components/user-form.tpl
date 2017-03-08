@@ -58,7 +58,4 @@
 	</button>
 </form>
 <pre>Password requirements:
-Password needs to be between 8-20 charachers long
-Password must contain a mix of lowercase and uppercase letters
-Password must contain at least 1 digit
-Password must contain at least one special character</pre>
+Password needs to be between 8-20 charachers long</pre>

@@ -7,10 +7,10 @@ let PasswordValidator = require("password-validator");
 let passwordValidator = new PasswordValidator();
 passwordValidator.isMin(8);
 passwordValidator.isMax(20);
-passwordValidator.has().uppercase();
-passwordValidator.has().lowercase();
-passwordValidator.has().digits();
-passwordValidator.has().symbols();
+// passwordValidator.has().uppercase();
+// passwordValidator.has().lowercase();
+// passwordValidator.has().digits();
+// passwordValidator.has().symbols();
 
 let UserSchema = new mongoose.Schema({
 	email: {
