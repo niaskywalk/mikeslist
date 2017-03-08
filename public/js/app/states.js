@@ -62,6 +62,9 @@
 					categories: ["categoriesService", function(categoriesService){
 						return categoriesService.getAllCategories();
 					}]
+				},
+				data: {
+					protected: "user"
 				}
 			};
 			var editListingState = {
@@ -76,6 +79,9 @@
 				},
 				params: {
 					listing: {}
+				},
+				data: {
+					protected: "user"
 				}
 			};
 			var usersState = {
@@ -88,6 +94,9 @@
 				},
 				views: {
 					"content-view": "usersComponent"
+				},
+				data: {
+					protected: "user"
 				}
 			};
 			var userState = {
@@ -100,12 +109,18 @@
 				},
 				views: {
 					"content-view": "userComponent"
+				},
+				data: {
+					protected: "user"
 				}
 			};
 			var newUserState = {
 				name: "root-state.new-user-state",
 				views: {
 					"content-view": "createUserFormComponent"
+				},
+				data: {
+					protected: "user"
 				}
 			};
 			var editUserState = {
@@ -115,6 +130,9 @@
 				},
 				params: {
 					user: {}
+				},
+				data: {
+					protected: "user"
 				}
 			};
 			$stateProvider.state(rootState);

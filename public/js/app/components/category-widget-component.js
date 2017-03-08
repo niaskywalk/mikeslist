@@ -23,6 +23,17 @@
 			//flag indicating the current widget state
 			vm.editing = false;
 
+			vm.errors = {
+				categoryExists: false,
+				unknownError: false
+			};
+
+			vm.resetErrors = function() {
+				for (var error in vm.errors) {
+					vm.errors[error] = false;
+				}
+			};
+
 			//enables the template to check whether in admin mode or not
 			vm.globals = globals;
 
@@ -54,6 +65,7 @@
 				//existing category name
 				vm.editing = false;
 				vm.newValue = vm.category.name;
+				vm.resetErrors();
 			};
 
 			vm.submitCategory = function() {
@@ -75,8 +87,12 @@
 						document.getElementById("category-edit-field").focus();
 						document.getElementById("category-edit-field").select();
 					});
-					window.alert(err.data.error);
-					console.error(err);
+					if (err.status === 409) {
+						vm.errors.categoryExists = true;
+					} else {
+						vm.errors.unknownError = true;
+						console.error(err);
+					}
 				});
 			};
 

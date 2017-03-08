@@ -14,14 +14,14 @@ module.exports = {
 			if (err) return next(err);
 			Listing.findById(req.params.id).
 			then(foundListing => {
-				var error;
+				let error;
 				if (!foundListing) {
 					error = new Error("Listing not found");
 					error.code = 404;
 					return Promise.reject(error);
 				} else if (foundListing.posterEmail !== req.user.email && !req.user.admin) {
 					error = new Error("User is not article owner");
-					error.code = 401;
+					error.code = 403;
 					return Promise.reject(error);
 				} else {
 					return next();
@@ -40,7 +40,7 @@ module.exports = {
 				return next();
 			} else {
 				let error = new Error("You don't have permission to access this feature");
-				error.code = 401;
+				error.code = 403;
 				return next(error);
 			}
 		}
@@ -53,14 +53,14 @@ function verifyUser(req, res, next) {
 		token = jwtSimple.decode(token, require("../secret"));
 	} else {
 		let error = new Error("Not logged in");
-		error.code = 401;
+		error.code = 403;
 		return next(error);			
 	}
 	User.findById(token.user._id).
 	then((foundUser) => {
 		if (!foundUser || foundUser.email !== token.user.email) {
 			let error = new Error("Not logged in");
-			error.code = 401;
+			error.code = 403;
 			return Promise.reject(error);
 		} else {
 			req.user = {

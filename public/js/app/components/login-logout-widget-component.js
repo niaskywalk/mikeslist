@@ -32,19 +32,27 @@
 				catch(function(err) {
 					vm.email = "";
 					vm.password = "";
-					window.alert(err.data.error);
-					console.error(err);
+					if (err.status === 403) {
+						vm.error = "Invalid email or password";
+					} else {
+						vm.error = "Error logging in, contact site owner";
+						console.error(err);
+					}
 				});
 			};
 
 			vm.logout = function() {
 				userLoginService.logout().
 				then(function(){
-					$state.go($state.current, {}, {reload: true});
+					if ($state.current.data && $state.current.data.protected === "user") {
+						$state.go("root-state.categories-state", {}, {reload: true});
+					} else {
+						$state.go($state.current, {}, {reload: true});						
+					}
 				}).
 				catch(function(err) {
-					window.alert(err.data.error);
-					console.log(err);
+					console.error(err.data.error);
+					console.error(err);
 				});
 			};
 
@@ -52,6 +60,7 @@
 				vm.email = "";
 				vm.password = "";
 				vm.formOpen = false;
+				vm.error = "";
 			};
 		}],
 		templateUrl: "login-logout-widget-component.tpl"

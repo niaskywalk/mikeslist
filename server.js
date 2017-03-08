@@ -2,6 +2,7 @@
 let express = require("express");
 let app = express();
 let bp = require("body-parser");
+let init = require("./init");
 const PORT = process.env.NODE_PORT || 3000;
 
 require("./db");
@@ -18,8 +19,8 @@ app.get("*", (req, res) => {
 
 app.use((err, req, res, next) => {
 	if (err.name === "ValidationError") {
-		var result = [];
-		for (var name in err.errors) {
+		let result = [];
+		for (let name in err.errors) {
 			result.push(err.errors[name].message);
 		}
 		res.status(400).json({
@@ -53,6 +54,9 @@ app.use((err, req, res, next) => {
 	return next(err);
 });
 
-app.listen(PORT, () => {
-	console.log(`Server active on port ${PORT}`);
-});
+init().
+then(() => {
+	app.listen(PORT, () => {
+		console.log(`Server active on port ${PORT}`);
+	});	
+})

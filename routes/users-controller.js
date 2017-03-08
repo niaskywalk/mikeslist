@@ -16,7 +16,7 @@ module.exports = {
 		User.findOne({email: req.params.email}, {password: 0}).
 		then(foundUser => {
 			if (!foundUser) {
-				var error = new Error("User not found");
+				let error = new Error("User not found");
 				error.code = 404;
 				return Promise.reject(error);
 			} else {
@@ -55,7 +55,7 @@ module.exports = {
 			if (!foundUser) {
 
 				//if not found, construct an error object and attach 404 code
-				var error = new Error("User not found");
+				let error = new Error("User not found");
 				error.code = 404;
 
 				//then abort the chain
@@ -99,7 +99,7 @@ module.exports = {
 			if (!foundUser) {
 
 				//if not construct the error and set the code to 404
-				var error = new Error("User not found");
+				let error = new Error("User not found");
 				error.code = 404;
 
 				//then abort the chain

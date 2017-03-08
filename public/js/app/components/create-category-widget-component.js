@@ -19,6 +19,16 @@
 			//placeholder for new category name
 			vm.categoryName = "";
 
+			vm.errors = {
+				categoryExists: false
+			};
+
+			vm.resetErrors = function() {
+				for (var error in vm.errors) {
+					vm.errors[error] = false;
+				}
+			};			
+
 			//enables the template to check whether in admin mode or not
 			vm.globals = globals;
 
@@ -37,6 +47,7 @@
 			vm.cancelEdit = function() {
 				vm.editing = false;
 				vm.categoryName = "";
+				vm.resetErrors();
 			};
 
 			vm.submitCategory = function() {
@@ -51,8 +62,12 @@
 						document.getElementById("category-create-field").focus();					
 						document.getElementById("category-create-field").select();					
 					});
-					window.alert(err.data.error);
-					console.error(err);
+					if (err.status === 409) {
+						vm.errors.categoryExists = true;
+					} else {
+						vm.errors.unknownError = true;
+						console.error(err);
+					}
 				});
 			};
 
