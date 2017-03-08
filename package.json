@@ -1,6 +1,6 @@
 {
   "name": "mikeslist",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "A classified ads site",
   "main": "server.js",
   "scripts": {
