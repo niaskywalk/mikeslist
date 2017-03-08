@@ -6,17 +6,32 @@
 	"use strict";
 	angular.module("mikeslist").
 	component("headerComponent", {
+
+		//receives 'uncategorized' category object as an attribute
+		//to display number of items in this category to the admin user
 		bindings: {
 			uncategorized: "<"
 		},
-		controller: ["globals", "authenticationService", function(globals, authenticationService){
-			var vm = this;
-			vm.globals = globals;
-			vm.authenticationBindings = authenticationService.bindings;
-			vm.toggleAdminEditMode = function() {
-				globals.adminEditMode = !globals.adminEditMode;
-			};
-		}],
+		controller: headerComponentController,
 		templateUrl: "header-component.tpl"
 	});
+
+	headerComponentController.$inject = ["authenticationService", "globals"];
+
+	function headerComponentController(authenticationService, globals) {
+		var vm = this;
+
+		//bind authentication bindings to have access to the currently
+		//logged-in user information
+		//(has properties: loggedIn(boolean), email(string), and admin(boolean))
+		vm.authenticationBindings = authenticationService.bindings;
+		
+		//bind globals to be able to access the adminEditMode status
+		vm.globals = globals;
+
+		//toggles the admin edit mode
+		vm.toggleAdminEditMode = function() {
+			globals.adminEditMode = !globals.adminEditMode;
+		};
+	}
 })();
