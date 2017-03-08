@@ -20,7 +20,8 @@
 			vm.categoryName = "";
 
 			vm.errors = {
-				categoryExists: false
+				categoryExists: false,
+				unknownError: false
 			};
 
 			vm.resetErrors = function() {
