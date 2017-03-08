@@ -34,7 +34,9 @@
 		   ng-change="userForm.$valid && userForm.$setPristine()">
 	<br>
 	<label for="admin-checkbox">User is admin: </label>
-	<input type="checkbox" ng-model="$ctrl.user.admin" ng-disabled="$ctrl.email && $ctrl.authenticationBindings.email === $ctrl.email">
+	<input type="checkbox"
+		   ng-model="$ctrl.user.admin"
+		   ng-disabled="$ctrl.email && $ctrl.authenticationBindings.email === $ctrl.email">
 	<br>
 	<input type="password"
 	       ng-model="$ctrl.user.password"
@@ -54,7 +56,7 @@
 	<br>
 	<button type="submit"
 			ng-click="$ctrl.errors.passwordMismatched = ''">
-				Submit Form
+		Submit Form
 	</button>
 </form>
 <pre>Password requirements:
