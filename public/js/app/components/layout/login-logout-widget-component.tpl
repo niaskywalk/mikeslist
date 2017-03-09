@@ -30,7 +30,6 @@
   </div>
     
   <input ng-keydown="$ctrl.resetErrors()"
-         ng-keydown="$ctrl.resetErrors()" 
          ng-model="$ctrl.email"
          type="text">
 
@@ -40,8 +39,8 @@
 
   <button type="submit">Login</button>
 
-  <button type="button"
-          ng-click="$ctrl.cancelLogin()">
-          Cancel
+  <button ng-click="$ctrl.cancelLogin()"
+          type="button">
+    Cancel
   </button>
 </form>

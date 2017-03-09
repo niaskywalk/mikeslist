@@ -1,124 +1,155 @@
 //This component displays a name for the category with the listing count
-//as well as (if admin) the delete and edit links
-//
+//as well as the delete and edit links (if logged in as admin)
+
 //Clicking the edit link opens the edit form and calls onBeginEdit binding
-//
-//category binding is passed down from categories component as a category object
-//without resolving the listings
-//
-//onBeginEdit received a callback to notify parent to close other edit forms
-//when this edit form is open
 
 (function(){
-	"use strict";
-	angular.module("mikeslist").
-	component("categoryWidgetComponent", {
-		bindings: {
-			category: "<",
-			onBeginEdit: "&"
-		},
-		controller: ["$scope", "$state", "$timeout", "categoriesService", "globals", function($scope, $state, $timeout, categoriesService, globals) {
-			var vm = this;
+  "use strict";
+  angular.module("mikeslist").
+  component("categoryWidgetComponent", {
 
-			//flag indicating the current widget state
-			vm.editing = false;
+    //receives category object as an attribute
+    //binds to onBeginEdit function via attribute
+    //to notify other forms to close
+    bindings: {
+      category: "<",
+      onBeginEdit: "&"
+    },
+    controller: categoryWidgetComponentController,
+    templateUrl: "category-widget-component.tpl"
+  });
 
-			vm.errors = {
-				categoryExists: false,
-				unknownError: false
-			};
+  categoryWidgetComponentController.$inject = [
+    "$scope",
+    "$state",
+    "$timeout",
+    "categoriesService",
+    "globals"
+  ];
 
-			vm.resetErrors = function() {
-				for (var error in vm.errors) {
-					vm.errors[error] = false;
-				}
-			};
+  function categoryWidgetComponentController(
+    $scope,
+    $state,
+    $timeout,
+    categoriesService,
+    globals   
+  ) {
+    var vm = this;
 
-			//enables the template to check whether in admin mode or not
-			vm.globals = globals;
+    //current error state
+    vm.errors = {
+      categoryExists: false,
+      unknownError: false
+    };
 
-			//placeholder for new category name
-			vm.newValue = "";
+    //tracks the state of the form
+    vm.formOpen = false;
 
-			//when category is bound set the new value to same name as category
-			vm.$onInit = function() {
-				vm.newValue = vm.category.name;
-			};
+    //bind globals to be able to access the adminEditMode status
+    vm.globals = globals;
 
-			vm.beginEdit = function() {
+    //new category name to be submitted
+    vm.newCategoryName = "";
 
-				//send a signal to parent to dispatch a closing event to all widgets except the current one
-				vm.onBeginEdit({except: vm.category});
-				vm.editing = true;
+    //runs automatically when controller is initialized
+    //when category is bound to controller sets the new category name
+    //to bound category name
+    vm.$onInit = function() {
+      vm.newCategoryName = vm.category.name;
+    };
 
-				//focus the input field
-				$timeout(function(){
-					document.getElementById("category-edit-field").focus();
-					document.getElementById("category-edit-field").select();
+    //opens the edit form
+    vm.beginEdit = function() {
 
-				});
-			};
+      //send a signal to parent to dispatch a closing event to all widgets
+      //except the current one
+      vm.onBeginEdit({except: vm.category});
 
-			vm.cancelEdit = function() {
+      //open the form
+      vm.formOpen = true;
 
-				//set editing to false and revert the newValue back to
-				//existing category name
-				vm.editing = false;
-				vm.newValue = vm.category.name;
-				vm.resetErrors();
-			};
+      //focus and highlight the input field
+      //timeout is necessary to allow the digest cycle time to refresh
+      $timeout(function(){
+        document.getElementById("category-edit-field").focus();
+        document.getElementById("category-edit-field").select();
+      });
+    };
 
-			vm.submitCategory = function() {
-				categoriesService.editCategory(vm.category.name, {name: vm.newValue || ""}).
-				then(function(){
+    //closes the form and resets the new category name
+    //clears the errors
+    vm.cancelEdit = function() {
 
-					//if successful, set editing flag to false
-					//and reload current state
-					vm.editing = false;
-					$state.go($state.current, {}, {reload: true});
-				}).
-				catch(function(err){
+      //close the form
+      vm.formOpen = false;
 
-					//in case of error remain in editing state, focus the
-					//input field, display error message alert box,
-					//and output error to console
-	
-					$timeout(function(){
-						document.getElementById("category-edit-field").focus();
-						document.getElementById("category-edit-field").select();
-					});
-					if (err.status === 409) {
-						vm.errors.categoryExists = true;
-					} else {
-						vm.errors.unknownError = true;
-						console.error(err);
-					}
-				});
-			};
+      //set editing to false and revert newCategoryName back to
+      //existing category name
+      vm.newCategoryName = vm.category.name;
 
-			vm.deleteCategory = function() {
-				categoriesService.removeCategory(vm.category.name).
-				then(function() {
+      //reset error state
+      vm.resetErrors();
+    };
 
-					//if deletion successful, reload current state
-					$state.go($state.current, {}, {reload: true});
-				}).
-				catch(function(err){
+    //atttempts to delete category via categoriesService
+    vm.deleteCategory = function() {
+      categoriesService.removeCategory(vm.category.name).
+      then(function() {
 
-					//in case of error, display message alert box
-					//and output error to console
-					window.alert(err.data.error);
-					console.error(err);
-				});
-			};
+        //if deletion successful, reload current state
+        $state.go($state.current, {}, {reload: true});
+      }).
+      catch(function(err){
 
-			//if closing event received, check to make sure the current widget was not the sender
-			$scope.$on("close:forms", function(event, except){
-				if (except._id !== vm.category._id) {
-					vm.cancelEdit();
-				}
-			});
-		}],
-		templateUrl: "category-widget-component.tpl"
-	});
+        //in case of error, output error to console
+        console.error(err);
+      });
+    };
+
+    //reset error status
+    vm.resetErrors = function() {
+      for (var error in vm.errors) {
+        vm.errors[error] = false;
+      }
+    };
+
+    //attempts to update category name via categoriesService
+    vm.submitCategory = function() {
+      categoriesService.editCategory(vm.category.name, {name: vm.newCategoryName || ""}).
+      then(function(){
+
+        //if successful, close the form and reload current state
+        vm.formOpen = false;
+        $state.go($state.current, {}, {reload: true});
+      }).
+      catch(function(err){
+
+        //in case of error remain in editing state
+
+        //focus and highlight the input field
+        //timeout is necessary to allow the digest cycle time to refresh
+        $timeout(function(){
+          document.getElementById("category-edit-field").focus();
+          document.getElementById("category-edit-field").select();
+        });
+
+        //set appropriate error status
+        if (err.status === 409) {
+          vm.errors.categoryExists = true;
+        } else {
+          vm.errors.unknownError = true;
+          console.error(err);
+        }
+      });
+    };
+
+    //listen for 'close:forms' event
+    //when received, check to make sure the current widget was not the sender
+    //if not - close this form
+    $scope.$on("close:forms", function(event, except){
+      if (except._id !== vm.category._id) {
+        vm.cancelEdit();
+      }
+    });   
+  }
 })();
