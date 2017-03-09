@@ -38,7 +38,9 @@ gulp.task("css", () => {
 			this.emit("end");
 		}))
 		.pipe(sourceMaps.init())
-		.pipe(sass())
+		.pipe(sass({
+			outputStyle: "compact"
+		}))
 		.pipe(autoprefixer())
 		.pipe(gulp.dest("public/css/"))
 		.pipe(browserSync.stream())
