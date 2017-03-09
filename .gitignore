@@ -166,6 +166,6 @@ $RECYCLE.BIN/
 
 # Custom Ignores
 public/css
-publis/js/main.js
+public/js/main.js
 public/js/main.js.map
 public/js/app/templates.js
