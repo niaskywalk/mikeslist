@@ -83,15 +83,14 @@
       //close the form
       vm.formOpen = false;
 
-      //set editing to false and revert newCategoryName back to
-      //existing category name
+      //revert newCategoryName back to existing category name
       vm.newCategoryName = vm.category.name;
 
       //reset error state
       vm.resetErrors();
     };
 
-    //atttempts to delete category via categoriesService
+    //attempts to delete category via categoriesService
     vm.deleteCategory = function() {
       categoriesService.removeCategory(vm.category.name).
       then(function() {
@@ -124,7 +123,7 @@
       }).
       catch(function(err){
 
-        //in case of error remain in editing state
+        //in case of error keep the form open
 
         //focus and highlight the input field
         //timeout is necessary to allow the digest cycle time to refresh

@@ -13,7 +13,8 @@
 
 <form name="categoryForm"
       ng-if="$ctrl.formOpen"
-      ng-submit="categoryForm.$valid && $ctrl.submitCategory()"
+      ng-submit="categoryForm.$valid &&
+                 $ctrl.submitCategory()"
       novalidate>
 
   <div class="error-messages">
