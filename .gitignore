@@ -163,3 +163,9 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/node,bower,macos,windows,linux,sass,sublimetext
+
+# Custom Ignores
+public/css
+public/js/main.js
+public/js/main.js.map
+public/js/app/templates.js
