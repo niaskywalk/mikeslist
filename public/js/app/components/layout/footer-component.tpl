@@ -1,1 +1,1 @@
-<h1>This is the Footer</h1>
+&copy; Mike Semko 2017
