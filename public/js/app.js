@@ -1,6 +1,6 @@
 (function(){
   "use strict";
-  angular.module("mikeslist", ["ui.router"]).
+  angular.module("mikeslist", ["ui.router", "ngMaterial", "ngAnimate", "truncate"]).
   
   config(["$httpProvider", function($httpProvider){
 
