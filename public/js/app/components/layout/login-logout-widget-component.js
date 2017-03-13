@@ -26,14 +26,18 @@
     "$state",
     "$window",
     "authenticationService",
-    "userLoginService"
+    "userLoginService",
+    "$mdToast",
+    "$element"
   ];
 
   function loginLogoutWidgetController(
     $state,
     $window,
     authenticationService,
-    userLoginService
+    userLoginService,
+    $mdToast,
+    $element
   ) {
     var vm = this;
 
@@ -78,10 +82,26 @@
         //set appropriate error status
         if (err.status === 403) {
           vm.errors.invalidLogin = true;
+          var loginError = $mdToast.simple();
+          loginError.position("bottom left");
+          loginError.textContent("Invalid email or password");
+          loginError.hideDelay(500);
+          loginError.parent($element.find("form"));
+          $mdToast.show(loginError);
         } else {
           vm.errors.unknownError = true;
+          var generalError = $mdToast.simple();
+          generalError.position("bottom left");
+          generalError.textContent("Unknown error has occured. Contact site administrator");
+          generalError.hideDelay(500);
+          generalError.parent($element.find("form"));
+          $mdToast.show(generalError);
           console.error(err);
         }
+
+        document.getElementById("email-field").blur();
+        document.getElementById("password-field").blur();
+
       });
     };
 
@@ -94,11 +114,11 @@
         if ($state.current.data && $state.current.data.protected === "user") {
 
           //if protected load the categories state
-          $state.go("root-state.categories-state", {}, {reload: true});
+          $state.go("root-state.categories-state", {});
         } else {
 
           //else reload the current state
-          $state.go($state.current, {}, {reload: true});            
+          $state.go($state.current, {});            
         }
       }).
       catch(function(err) {

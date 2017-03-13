@@ -1,1 +1,10 @@
-@import "layout/header"
+.clearfix {
+  clear: both;
+}
+
+.site-wrapper {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+@import "layout/header-component";

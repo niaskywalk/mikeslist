@@ -76,7 +76,7 @@ module.exports = {
 				err.humanReadableError = "Category with this name already exists";
 			} 
 			return next(err);
-		});		
+		});
 	},
 
 	update: (req, res, next) => {
