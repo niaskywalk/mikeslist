@@ -34,6 +34,20 @@
   }
 }
 
+.login-link.ng-enter, .email-field.ng-enter, .password-field.ng-enter, .login-form .button.ng-enter {
+  transition: .2s linear all;
+  transition-delay: .2s;
+  opacity: 0;
+}
+
+.login-link.ng-enter-active, .email-field.ng-enter.ng-enter-active, .password-field.ng-enter-active, .login-form .button.ng-enter-active {
+  opacity: 1;
+}
+
+.login-link.ng-leave, .email-field.ng-leave, .password-field.ng-leave, .login-form .button.ng-leave {
+  transition: none;
+}
+
 .dev-only {
   border: 1px solid black;
   position: absolute;
@@ -69,18 +83,4 @@
       }
     }
   }
-}
-
-.login-link.ng-enter, .email-field.ng-enter, .password-field.ng-enter, .login-form .button.ng-enter {
-  transition: .2s linear all;
-  transition-delay: .2s;
-  opacity: 0;
-}
-
-.login-link.ng-enter-active, .email-field.ng-enter.ng-enter-active, .password-field.ng-enter-active, .login-form .button.ng-enter-active {
-  opacity: 1;
-}
-
-.login-link.ng-leave, .email-field.ng-leave, .password-field.ng-leave, .login-form .button.ng-leave {
-  transition: none;
 }
